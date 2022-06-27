@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-26T15:26:22.058Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36 Edg/103.0.1264.37" etag="PcWPDe6zqE8NeITYGUA8" version="20.0.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-06-27T15:25:45.569Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36 Edg/103.0.1264.37" etag="E5WiFPZaVgdSwoCWFo-l" version="20.0.3" type="github">
   <diagram name="Page-1" id="74e2e168-ea6b-b213-b513-2b3c1d86103e">
     <mxGraphModel dx="2138" dy="547" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
@@ -130,11 +130,17 @@
         <mxCell id="dkneOuPwnhS5p_DpT9uo-53" value="通科中间件协议" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillWeight=4;hachureGap=8;hachureAngle=45;fillColor=#d5e8d4;sketch=1;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="974" y="680" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="dkneOuPwnhS5p_DpT9uo-56" value="收到mqtt请求后即写入无锁队列&lt;br&gt;&lt;br&gt;逻辑处理2：处理下行队列，根据请求组包写入下行buff&lt;br&gt;处理上行队列，根据应答拆包写入发送发布&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-65" y="60" width="310" height="60" as="geometry" />
-        </mxCell>
         <mxCell id="hd8WvTRlU5QdLkVc9hPx-4" value="推送发布" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="610" y="110" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yrOie3cFXsgSP7xj6JYT-3" value="&lt;span style=&quot;&quot;&gt;逻辑处理1：&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;1、解析TopoApp的下行mqtt请求，存入mqtt请求队列，供逻辑2使用&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;2、解析tk载波邮箱服务返回的mqtt应答及中间件服务返回的mqtt应答，&lt;/span&gt;&lt;span style=&quot;&quot;&gt;组应答帧推送至TopoApp&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=#47FFF9;labelBorderColor=default;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="200" width="370" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="yrOie3cFXsgSP7xj6JYT-4" value="&lt;span style=&quot;&quot;&gt;逻辑处理2：&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;1、pop mqtt请求队列，组帧tk载波邮箱协议，存入下行tk_modbus队列，供逻辑3使用&lt;/span&gt;&lt;br style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;2、解析中间件服务返回的tk载波邮箱协议应答包，根据应答数据，组帧存入mqtt应答队列，供逻辑1使用&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=#47FFF9;labelBorderColor=default;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="430" width="370" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="yrOie3cFXsgSP7xj6JYT-5" value="&lt;span style=&quot;&quot;&gt;逻辑处理3:&lt;br&gt;1、pop 载波邮箱协议的下行tk_modbus队列，根据中间件通信协议组帧发送至中间件&lt;br&gt;2、接收中间件的返回报文，解析数据，命令报文则直接存入mqtt应答队列，业务数据则解析至上行tk_modbus队列，供逻辑2处理&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=#47FFF9;labelBorderColor=default;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="680" width="370" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
